@@ -1,0 +1,12 @@
+@import "tailwindcss/base";
+
+html,
+body {
+  @apply text-gray-900 antialiased;
+
+  font-family: Inter, Arial, sans-serif;
+}
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
