@@ -1,39 +1,31 @@
+import fs from "fs";
+import path from "path";
 import React from "react";
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { date: new Date() };
-  }
+export async function getStaticProps() {
+  const dataFolder = path.join(process.cwd(), "data");
 
-  componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000);
-  }
+  const countriesFilePath = path.join(dataFolder, "countries.json");
+  const countriesFileContent = fs.readFileSync(countriesFilePath, "utf8");
+  const countries = JSON.parse(countriesFileContent);
 
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  tick() {
-    this.setState({
-      date: new Date(),
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-      </div>
-    );
-  }
+  return {
+    props: {
+      countries,
+    },
+  };
 }
 
-function HomePage() {
+function HomePage({ countries }) {
   return (
     <main className="container mx-auto p-5 my-8">
-      <h1>Can I fly?</h1>
-      <Clock />
+      <h1 className="">Can I fly?</h1>
+
+      {Object.entries(countries).map(([key, country]) => (
+        <div key={key}>
+          {country.flag} - {country.friendlyName}
+        </div>
+      ))}
     </main>
   );
 }

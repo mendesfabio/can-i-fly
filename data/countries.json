@@ -1,0 +1,26 @@
+{
+  "brazil": {
+    "friendlyName": "Brazil",
+    "flag": "🇧🇷"
+  },
+  "france": {
+    "friendlyName": "France",
+    "flag": "🇫🇷"
+  },
+  "italy": {
+    "friendlyName": "Italy",
+    "flag": "🇮🇹"
+  },
+  "china": {
+    "friendlyName": "China",
+    "flag": "🇨🇳"
+  },
+  "spain": {
+    "friendlyName": "Spain",
+    "flag": "🇪🇸"
+  },
+  "usa": {
+    "friendlyName": "United States",
+    "flag": "🇺🇸"
+  }
+}
