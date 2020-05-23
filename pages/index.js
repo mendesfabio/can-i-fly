@@ -85,7 +85,8 @@ export default HomePage;
 
 const countryNames = Object.values(countries).map((country) => country.name);
 const boldNameMapper = (word) => {
-  return countryNames.includes(word) ? <b>{word} </b> : `${word} `;
+  const name = word.replace(/[\W\d_]/g, "");
+  return countryNames.includes(name) ? <b>{word} </b> : `${word} `;
 };
 
 const Description = ({ text }) => {
