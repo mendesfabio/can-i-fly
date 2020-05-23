@@ -63,7 +63,9 @@ class HomePage extends React.Component {
                 {destinationInfo ? (
                   <>
                     <p className="text-gray-500 mb-5">{destinationInfo.updated_at}</p>
-                    <p className="text-justify">{destinationInfo.description}</p>
+                    <p className="text-justify">
+                      <Description text={destinationInfo.description} />{" "}
+                    </p>
                   </>
                 ) : (
                   <p className="text-red-700 mb-5">Seems like we don't information about this country yet. 😕</p>
@@ -80,3 +82,12 @@ class HomePage extends React.Component {
 }
 
 export default HomePage;
+
+const countryNames = Object.values(countries).map((country) => country.name);
+const boldNameMapper = (word) => {
+  return countryNames.includes(word) ? <b>{word} </b> : `${word} `;
+};
+
+const Description = ({ text }) => {
+  return text.split(" ").map(boldNameMapper);
+};
