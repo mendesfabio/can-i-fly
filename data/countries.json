@@ -1,4 +1,8 @@
 {
+  "anywhere": {
+    "friendlyName": "Anywhere",
+    "flag": "🏳"
+  },
   "brazil": {
     "friendlyName": "Brazil",
     "flag": "🇧🇷"
