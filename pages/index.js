@@ -36,7 +36,8 @@ function HomePage({ countries }) {
       <div className="grid grid-cols-12 gap-4 my-10 mx-5">
         <div className="col-span-12 md:col-span-6 lg:col-span-4 lg:col-start-3">
           <h3 className="font-medium mb-1 inline-block">I am leaving from</h3>
-          <Select options={countriesOptions} defaultValue={countriesOptions[0]} />
+          <span className="italic text-gray-500 text-xs ml-2">(Coming soon)</span>
+          <Select options={countriesOptions} defaultValue={countriesOptions[0]} isDisabled />
         </div>
 
         <div className="col-span-12 md:col-span-6 lg:col-span-4">
