@@ -1,29 +1,29 @@
 {
-  "anywhere": {
+  "*": {
     "friendlyName": "Anywhere",
     "flag": "🏳"
   },
-  "brazil": {
+  "BR": {
     "friendlyName": "Brazil",
     "flag": "🇧🇷"
   },
-  "france": {
+  "FR": {
     "friendlyName": "France",
     "flag": "🇫🇷"
   },
-  "italy": {
+  "IT": {
     "friendlyName": "Italy",
     "flag": "🇮🇹"
   },
-  "china": {
+  "CN": {
     "friendlyName": "China",
     "flag": "🇨🇳"
   },
-  "spain": {
+  "ES": {
     "friendlyName": "Spain",
     "flag": "🇪🇸"
   },
-  "usa": {
+  "US": {
     "friendlyName": "United States",
     "flag": "🇺🇸"
   }
