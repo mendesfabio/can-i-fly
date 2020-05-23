@@ -5,13 +5,10 @@ import Select from "react-select";
 
 import Header from "../components/index/Header";
 import Footer from "../components/index/Footer";
+import countries from "../data/countries";
 
 export async function getStaticProps() {
   const dataFolder = path.join(process.cwd(), "data");
-
-  const countriesFilePath = path.join(dataFolder, "countries.json");
-  const countriesFileContent = fs.readFileSync(countriesFilePath, "utf8");
-  const countries = JSON.parse(countriesFileContent);
 
   const rawInfoFilePath = path.join(dataFolder, "rawInfo.json");
   const rawInfoFileContent = fs.readFileSync(rawInfoFilePath, "utf8");
@@ -19,7 +16,6 @@ export async function getStaticProps() {
 
   return {
     props: {
-      countries,
       rawInfo,
     },
   };
@@ -41,13 +37,13 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const countriesOptions = Object.entries(this.props.countries).map(([key, country]) => ({
+    const countriesOptions = Object.entries(countries).map(([key, country]) => ({
       value: key,
-      label: `${country.flag} ${country.friendlyName}`,
+      label: `${country.flag} ${country.name}`,
     }));
 
     const destinationOption = countriesOptions.find((options) => options.value === this.state.destinationCountry);
-    const destination = this.props.countries[this.state.destinationCountry];
+    const destination = countries[this.state.destinationCountry];
     const destinationInfo = this.props.rawInfo[this.state.destinationCountry];
 
     return (
@@ -78,7 +74,7 @@ class HomePage extends React.Component {
             ) : (
               <article>
                 <h4 className="text-5xl">{destination.flag}</h4>
-                <h4 className="text-2xl font-black tracking-tighter">{destination.friendlyName}</h4>
+                <h4 className="text-2xl font-black tracking-tighter">{destination.name}</h4>
                 {destinationInfo ? (
                   <>
                     <p className="text-gray-500 mb-5">{destinationInfo.updated_at}</p>

@@ -1,4 +1,8 @@
 export default {
+  "*": {
+    name: "Anywhere",
+    flag: "🏳",
+  },
   AC: {
     code: "AC",
     name: "Ascension Island",
