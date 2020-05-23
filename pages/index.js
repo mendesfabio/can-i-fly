@@ -1,25 +1,10 @@
-import fs from "fs";
-import path from "path";
 import React from "react";
 import Select from "react-select";
 
 import Header from "../components/index/Header";
 import Footer from "../components/index/Footer";
 import countries from "../data/countries";
-
-export async function getStaticProps() {
-  const dataFolder = path.join(process.cwd(), "data");
-
-  const rawInfoFilePath = path.join(dataFolder, "rawInfo.json");
-  const rawInfoFileContent = fs.readFileSync(rawInfoFilePath, "utf8");
-  const rawInfo = JSON.parse(rawInfoFileContent);
-
-  return {
-    props: {
-      rawInfo,
-    },
-  };
-}
+import rawInfo from "../data/rawInfo";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -44,7 +29,7 @@ class HomePage extends React.Component {
 
     const destinationOption = countriesOptions.find((options) => options.value === this.state.destinationCountry);
     const destination = countries[this.state.destinationCountry];
-    const destinationInfo = this.props.rawInfo[this.state.destinationCountry];
+    const destinationInfo = rawInfo[this.state.destinationCountry];
 
     return (
       <main className="container mx-auto p-5 my-8">

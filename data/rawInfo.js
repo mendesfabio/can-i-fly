@@ -85,10 +85,7 @@ export default {
     description:
       '1. Passengers are not allowed to enter Belgium.This does not apply to:- Passengers arriving from an EEA Member States, Switzerland or the United Kingdom.- Nationals of EEA Member States and Switzerland, returning home.- British nationals returning home.- Nationals of Andorra, Monaco, Montenegro, North Macedonia (Rep.), San Marino, Serbia and Vatican City (Holy See) with proof of connection travel to their home country.- Passengers with a long term residence permit or a long term \u201cD" visa issued by EEA Member States, Switzerland or the United Kingdom, returning home.- Family members of nationals of EEA Member States, Switzerland and of British nationals, returning home;- Diplomats;- Personnel of international and humanitarian organizations;- Humanitarian aid workers;- Military personnel.2. Passenger flights are only allowed to operate between 7:00 and 21:00.- This does not apply to humanitarian, repatriation and United Nations flights.3. Belgium temporarily reintroduced border controls.',
   },
-  BF: {
-    updated_at: "2020-04-18",
-    description: "Bobo Dioulasso (BOY) and Ouagadougou (OUA) airports are closed.",
-  },
+  BF: { updated_at: "2020-04-18", description: "Bobo Dioulasso (BOY) and Ouagadougou (OUA) airports are closed." },
   BG: {
     updated_at: "2020-05-07",
     description:

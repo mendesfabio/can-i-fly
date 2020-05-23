@@ -19,7 +19,8 @@ def main():
 
     parsed_data = parse_country_data(country_data)
 
-    with open("../data/rawInfo.json", "w") as file:
+    with open("../data/rawInfo.js", "w") as file:
+        file.writelines("export default ")
         json.dump(parsed_data, file)
 
 

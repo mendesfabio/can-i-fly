@@ -183,6 +183,7 @@ $RECYCLE.BIN/
 # Python venv
 .venv/
 __pycache__/
+*.egg-info/
 
 # Editor 
 .vscode/
