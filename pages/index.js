@@ -3,6 +3,9 @@ import path from "path";
 import React from "react";
 import Select from "react-select";
 
+import Header from "../components/index/Header";
+import Footer from "../components/index/Footer";
+
 export async function getStaticProps() {
   const dataFolder = path.join(process.cwd(), "data");
 
@@ -10,49 +13,89 @@ export async function getStaticProps() {
   const countriesFileContent = fs.readFileSync(countriesFilePath, "utf8");
   const countries = JSON.parse(countriesFileContent);
 
+  const rawInfoFilePath = path.join(dataFolder, "rawInfo.json");
+  const rawInfoFileContent = fs.readFileSync(rawInfoFilePath, "utf8");
+  const rawInfo = JSON.parse(rawInfoFileContent);
+
   return {
     props: {
       countries,
+      rawInfo,
     },
   };
 }
 
-function HomePage({ countries }) {
-  const countriesOptions = Object.entries(countries).map(([key, country]) => ({
-    value: key,
-    label: `${country.flag} ${country.friendlyName}`,
-  }));
+class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      originCountry: "*",
+      destinationCountry: "*",
+    };
+  }
 
-  return (
-    <main className="container mx-auto p-5 my-8">
-      <h1 className="text-6xl font-bold tracking-tighter text-center">Can I fly? ✈️</h1>
+  handleDestinationChange(option) {
+    this.setState({
+      destinationCountry: option.value,
+    });
+  }
 
-      <h2 className="text-2xl font-medium text-center">
-        Travel restrictions are abounding during the COVID-19 pandemic.
-        <br />
-        Use this simple app to know if you can fly somewhere.
-      </h2>
+  render() {
+    const countriesOptions = Object.entries(this.props.countries).map(([key, country]) => ({
+      value: key,
+      label: `${country.flag} ${country.friendlyName}`,
+    }));
 
-      <div className="grid grid-cols-12 gap-4 my-10 mx-5">
-        <div className="col-span-12 md:col-span-6 lg:col-span-4 lg:col-start-3">
-          <h3 className="font-medium mb-1 inline-block">I am leaving from</h3>
-          <span className="italic text-gray-500 text-xs ml-2">(Coming soon)</span>
-          <Select options={countriesOptions} defaultValue={countriesOptions[0]} isDisabled />
+    const destinationOption = countriesOptions.find((options) => options.value === this.state.destinationCountry);
+    const destination = this.props.countries[this.state.destinationCountry];
+    const destinationInfo = this.props.rawInfo[this.state.destinationCountry];
+
+    return (
+      <main className="container mx-auto p-5 my-8">
+        <Header />
+
+        <div className="grid grid-cols-12 gap-4 my-10 mx-5">
+          <div className="col-span-12 md:col-span-6 lg:col-span-4 lg:col-start-3">
+            <h3 className="font-medium mb-1 inline-block">I am leaving from</h3>
+            <span className="italic text-gray-500 text-xs ml-2">(Coming soon)</span>
+            <Select options={countriesOptions} defaultValue={countriesOptions[0]} isDisabled />
+          </div>
+
+          <div className="col-span-12 md:col-span-6 lg:col-span-4">
+            <h3 className="font-medium mb-1 inline-block">I want to go</h3>
+            <Select
+              options={countriesOptions}
+              value={destinationOption}
+              onChange={this.handleDestinationChange.bind(this)}
+            />
+          </div>
+
+          <div className="col-span-12 lg:col-span-8 lg:col-start-3 mt-5">
+            {destinationOption.value === "*" ? (
+              <h4 className="text-2xl font-medium text-center">
+                Select a destination above to see more information about the country.
+              </h4>
+            ) : (
+              <article>
+                <h4 className="text-5xl">{destination.flag}</h4>
+                <h4 className="text-2xl font-black tracking-tighter">{destination.friendlyName}</h4>
+                {destinationInfo ? (
+                  <>
+                    <p className="text-gray-500 mb-5">{destinationInfo.updated_at}</p>
+                    <p className="text-justify">{destinationInfo.description}</p>
+                  </>
+                ) : (
+                  <p className="text-red-700 mb-5">Seems like we don't information about this country yet. 😕</p>
+                )}
+              </article>
+            )}
+          </div>
         </div>
 
-        <div className="col-span-12 md:col-span-6 lg:col-span-4">
-          <h3 className="font-medium mb-1 inline-block">I want to go</h3>
-          <Select options={countriesOptions} defaultValue={countriesOptions[0]} />
-        </div>
-      </div>
-
-      <div className="text-center">
-        <a href="https://github.com/1313labs/can-i-fly" className="text-3xl">
-          <i className="fab fa-fw mr-1 fa-github"></i>
-        </a>
-      </div>
-    </main>
-  );
+        <Footer />
+      </main>
+    );
+  }
 }
 
 export default HomePage;
