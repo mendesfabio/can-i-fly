@@ -182,6 +182,7 @@ $RECYCLE.BIN/
 
 # Python venv
 .venv/
+__pycache__/
 
 # Editor 
 .vscode/
