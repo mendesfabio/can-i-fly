@@ -5,7 +5,8 @@
     "start": "next start",
     "static": "next build && next export && touch ./out/.nojekyll && echo 'canifly.sasse.it' > ./out/CNAME",
     "serve-static": "serve out",
-    "deploy": "gh-pages -d out -t true"
+    "deploy": "gh-pages -d out -t true",
+    "update-data": "cd crawler && poetry install && poetry shell && python main.py"
   },
   "dependencies": {
     "next": "^9.4.1",
