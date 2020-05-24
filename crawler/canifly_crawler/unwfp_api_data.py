@@ -4,6 +4,7 @@ import logging
 from datetime import datetime as dt
 from itertools import chain
 from functools import reduce
+from operator import itemgetter
 
 import requests
 
@@ -31,8 +32,8 @@ def get_data(entry, _type="country"):
             logging.error(f"Couldn't find iso2 code for {iso3}")
             return iso3
 
-    def airline():
-        return entry.get("airline")
+    def airline_name():
+        return entry.get("airline").replace(".", "")
 
     def published():
         raw_date = entry.get("published").strip()
@@ -61,7 +62,7 @@ def get_data(entry, _type="country"):
             "source": source(),
         }
         if _type == "airline":
-            return {**base, "airline": airline(), "info": airline_info()}
+            return {**base, "airline": airline_name(), "info": airline_info()}
         else:
             return {
                 **base,
@@ -80,10 +81,15 @@ def merge_dict_list(dict_list, override_keys=False):
     for _dict in dict_list:
         for key in _dict:
             try:
-                if not (value := _dict[key]) in d[key]:
-                    d[key].append(value)
+                d[key].append(_dict[key])
             except KeyError:
                 d[key] = [_dict[key]]
+            d[key] = sorted(
+                d[key],
+                key=lambda entry: dt.strptime(entry["updated_at"], "%Y-%m-%d"),
+                reverse=True,
+            )
+
     return d
 
 
