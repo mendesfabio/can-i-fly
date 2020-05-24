@@ -95,8 +95,12 @@ const Description = ({ data }) => {
   };
   return (
     <>
-      <p className="text-xl mt-5 tracking-tighter">Latest info</p>
-      <p className="text-justify">{prepareText(data.info)}</p>
+      <p className="text-xl mt-5 tracking-tighter">Latest news</p>
+      {data.info ? (
+        <p className="text-justify">{prepareText(data.info)}</p>
+      ) : (
+        <p className="text-red-700 mb-5">Sorry, we don't have any news about this country yet. 😕</p>
+      )}
       <p className="text-xl mt-5 tracking-tighter">Certification status</p>
       <p className="text mb-5">{data.certification_status}</p>
       <p className="text-xl mt-5 tracking-tighter">Travel restrictions</p>
