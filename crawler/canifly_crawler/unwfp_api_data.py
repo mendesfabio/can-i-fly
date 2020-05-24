@@ -3,6 +3,7 @@ import json
 import logging
 from datetime import datetime as dt
 from itertools import chain
+from functools import reduce
 
 import requests
 
@@ -71,9 +72,12 @@ def get_data(entry, _type="country"):
     return {country_iso2(): parse_data(_type)}
 
 
-def merge_dict_list(dicts):
+def merge_dict_list(dict_list, override_keys=False):
+    if override_keys:
+        return reduce(lambda a, b: dict(a, **b), dict_list)
+
     d = {}
-    for _dict in dicts:
+    for _dict in dict_list:
         for key in _dict:
             try:
                 if not (value := _dict[key]) in d[key]:
@@ -101,7 +105,7 @@ def get_country_data():
         json.loads(requests.get(url).text).get("features", []) for url in country_api
     ]
     parsed_data = [get_data(entry, "country") for entry in chain(*raw_responses)]
-    return merge_dict_list(parsed_data)
+    return merge_dict_list(parsed_data, override_keys=True)
 
 
 def main():
