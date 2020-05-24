@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 
 def main():
-    url = "https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm"
+    url = "https://www.iatatravelcentre.com/international-travel-document-news/1580226297.htm"  # noqa
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     scripts = soup.findAll("script")

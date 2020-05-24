@@ -1,12 +1,11 @@
-import json
-import requests
-from operator import itemgetter
-from collections import ChainMap
-from itertools import chain
-import logging
-from functools import reduce  # Python 3 compatibility
-from datetime import datetime as dt
 import importlib.resources as pkg_resources
+import json
+import logging
+from datetime import datetime as dt
+from itertools import chain
+
+import requests
+
 from canifly_crawler import static
 
 
@@ -85,7 +84,7 @@ def merge_dict_list(dicts):
 
 
 def get_airline_data():
-    airline_api = "https://services3.arcgis.com/t6lYS2Pmd8iVx1fy/arcgis/rest/services/COVID_Airline_Information_V2/FeatureServer/0/query?f=json&where=info%20%3C%3E%20%27%27%27%27%27%27&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=airline%20asc&outSR=102100&resultOffset=0&resultRecordCount=2500&resultType=standard&cacheHint=true"
+    airline_api = "https://services3.arcgis.com/t6lYS2Pmd8iVx1fy/arcgis/rest/services/COVID_Airline_Information_V2/FeatureServer/0/query?f=json&where=info%20%3C%3E%20%27%27%27%27%27%27&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=airline%20asc&outSR=102100&resultOffset=0&resultRecordCount=2500&resultType=standard&cacheHint=true"  # noqa
 
     raw_response = json.loads(requests.get(airline_api).text).get("features")
 
@@ -95,8 +94,8 @@ def get_airline_data():
 
 def get_country_data():
     country_api = [
-        "https://services3.arcgis.com/t6lYS2Pmd8iVx1fy/arcgis/rest/services/COVID_Travel_Restrictions_V2/FeatureServer/0/query?f=json&where=info%20%3C%3E%20%27%27%27%27%27%27&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFie%20desc%2Cadm0_name%20asc&outSR=102100&resultOffset=0&resultRecordCount=2500&resultType=standard&cacheHint=true",
-        "https://services3.arcgis.com/t6lYS2Pmd8iVx1fy/arcgis/rest/services/COVID_Travel_Restrictions_V2/FeatureServer/0/query?f=json&where=(info%20%3C%3E%20%27%27%27%27%27%27)%20AND%20(optional2%3C%3E%27%27%27%27%27%27)&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=optional1%20desc%2Cadm0_name%20asc&outSR=102100&resultOffset=0&resultRecordCount=2500&resultType=standard&cacheHint=true",
+        "https://services3.arcgis.com/t6lYS2Pmd8iVx1fy/arcgis/rest/services/COVID_Travel_Restrictions_V2/FeatureServer/0/query?f=json&where=info%20%3C%3E%20%27%27%27%27%27%27&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFie%20desc%2Cadm0_name%20asc&outSR=102100&resultOffset=0&resultRecordCount=2500&resultType=standard&cacheHint=true",  # noqa
+        "https://services3.arcgis.com/t6lYS2Pmd8iVx1fy/arcgis/rest/services/COVID_Travel_Restrictions_V2/FeatureServer/0/query?f=json&where=(info%20%3C%3E%20%27%27%27%27%27%27)%20AND%20(optional2%3C%3E%27%27%27%27%27%27)&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=optional1%20desc%2Cadm0_name%20asc&outSR=102100&resultOffset=0&resultRecordCount=2500&resultType=standard&cacheHint=true",  # noqa
     ]
     raw_responses = [
         json.loads(requests.get(url).text).get("features", []) for url in country_api
