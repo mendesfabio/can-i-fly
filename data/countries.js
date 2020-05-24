@@ -1198,11 +1198,6 @@ export default {
     name: "U.S. Outlying Islands",
     flag: "🇺🇲",
   },
-  UN: {
-    code: "UN",
-    name: "United Nations",
-    flag: "🇺🇳",
-  },
   US: {
     code: "US",
     name: "United States",
