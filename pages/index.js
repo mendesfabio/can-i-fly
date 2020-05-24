@@ -91,7 +91,7 @@ const boldNameMapper = (word) => {
 
 const Description = ({ data }) => {
   const prepareText = (input) => {
-    return input ? input.split(" ").map(boldNameMapper) : "";
+    return input ? input.split(/\s+/).map(boldNameMapper) : "";
   };
   return (
     <>
