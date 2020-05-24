@@ -5,6 +5,7 @@ import Header from "../components/index/Header";
 import Footer from "../components/index/Footer";
 import countries from "../data/countries";
 import countryInfo from "../data/countryInfo";
+import airlineInfo from "../data/airlineInfo";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -30,7 +31,8 @@ class HomePage extends React.Component {
     const destinationOption = countriesOptions.find((options) => options.value === this.state.destinationCountry);
     const destination = countries[this.state.destinationCountry];
     const destinationInfo = countryInfo[this.state.destinationCountry];
-
+    const destinationAirlineInfo = airlineInfo[this.state.destinationCountry];
+    console.log(this.state.destinationCountry);
     return (
       <main className="container mx-auto p-5 my-8">
         <Header />
@@ -62,12 +64,8 @@ class HomePage extends React.Component {
                 <h4 className="text-2xl font-black tracking-tighter">{destination.name}</h4>
                 {destinationInfo ? (
                   <>
-                    <p className="text-gray-500 mb-5">{destinationInfo[0].updated_at}</p>
-                    <p className="text mb-5">{destinationInfo[0].certification_status}</p>
-                    <p className="text-justify">
-                      <Description text={destinationInfo[0].info} />{" "}
-                    </p>
-                    <p className="text-gray-500 my-5">Sources: {destinationInfo[0].source}</p>
+                    <p className="text-gray-500 mb-5">{destinationInfo.updated_at}</p>
+                    <Description data={destinationInfo} /> <AirlineInfo data={destinationAirlineInfo} />
                   </>
                 ) : (
                   <p className="text-red-700 mb-5">Seems like we don't information about this country yet. 😕</p>
@@ -91,9 +89,38 @@ const boldNameMapper = (word) => {
   return countryNames.includes(name) ? <b>{word} </b> : `${word} `;
 };
 
-const Description = ({ text }) => {
-  return text
-    .reduce((acc, curr) => `${acc}\n${curr}`)
-    .split(" ")
-    .map(boldNameMapper);
+const Description = ({ data }) => {
+  const prepareText = (input) => {
+    return input ? input.split(" ").map(boldNameMapper) : "";
+  };
+  return (
+    <>
+      <p className="text-xl mt-5 tracking-tighter">Latest info</p>
+      <p className="text-justify">{prepareText(data.info)}</p>
+      <p className="text-xl mt-5 tracking-tighter">Certification status</p>
+      <p className="text mb-5">{data.certification_status}</p>
+      <p className="text-xl mt-5 tracking-tighter">Travel restrictions</p>
+      <p className="text-justify">{prepareText(data.restrictions)}</p>
+    </>
+  );
+};
+
+const AirlineInfo = ({ data }) => {
+  return data ? (
+    <>
+      <h4 className="text-2xl mt-5 font-black tracking-tighter">Latest airline news</h4>
+      {data.map((item) => (
+        <>
+          <p className="text-xl mt-5 tracking-tighter">{item.airline}</p>
+          <p className="text-gray-500 mb-5">{item.updated_at}</p>
+          <p className="text-justify">{item.info}</p>
+          <a className="no-underline" href={item.source}>
+            Source
+          </a>
+        </>
+      ))}
+    </>
+  ) : (
+    ""
+  );
 };
