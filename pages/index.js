@@ -4,7 +4,7 @@ import Select from "react-select";
 import Header from "../components/index/Header";
 import Footer from "../components/index/Footer";
 import countries from "../data/countries";
-import rawInfo from "../data/rawInfo";
+import countryInfo from "../data/countryInfo";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class HomePage extends React.Component {
 
     const destinationOption = countriesOptions.find((options) => options.value === this.state.destinationCountry);
     const destination = countries[this.state.destinationCountry];
-    const destinationInfo = rawInfo[this.state.destinationCountry];
+    const destinationInfo = countryInfo[this.state.destinationCountry];
 
     return (
       <main className="container mx-auto p-5 my-8">
@@ -62,10 +62,12 @@ class HomePage extends React.Component {
                 <h4 className="text-2xl font-black tracking-tighter">{destination.name}</h4>
                 {destinationInfo ? (
                   <>
-                    <p className="text-gray-500 mb-5">{destinationInfo.updated_at}</p>
+                    <p className="text-gray-500 mb-5">{destinationInfo[0].updated_at}</p>
+                    <p className="text mb-5">{destinationInfo[0].certification_status}</p>
                     <p className="text-justify">
-                      <Description text={destinationInfo.description} />{" "}
+                      <Description text={destinationInfo[0].info} />{" "}
                     </p>
+                    <p className="text-gray-500 my-5">Sources: {destinationInfo[0].source}</p>
                   </>
                 ) : (
                   <p className="text-red-700 mb-5">Seems like we don't information about this country yet. 😕</p>
@@ -90,5 +92,8 @@ const boldNameMapper = (word) => {
 };
 
 const Description = ({ text }) => {
-  return text.split(" ").map(boldNameMapper);
+  return text
+    .reduce((acc, curr) => `${acc}\n${curr}`)
+    .split(" ")
+    .map(boldNameMapper);
 };
